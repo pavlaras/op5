@@ -32,6 +32,10 @@ static bool enable_ipa_ws = true;
 module_param(enable_ipa_ws, bool, 0644);
 static bool enable_wlan_ws = true;
 module_param(enable_wlan_ws, bool, 0644);
+static bool enable_netlink_ws = true;
+module_param(enable_netlink_ws, bool, 0644);
+static bool enable_netmgr_wl_ws = true;
+module_param(enable_netmgr_wl_ws, bool, 0644);
 static bool enable_timerfd_ws = true;
 module_param(enable_timerfd_ws, bool, 0644);
 
@@ -584,9 +588,13 @@ static bool wakeup_source_blocker(struct wakeup_source *ws)
 			(!enable_qcom_rx_wakelock_ws &&
 				!strncmp(ws->name, "qcom_rx_wakelock", wslen)) ||
 			(!enable_wlan_wow_wl_ws &&
-	                        !strncmp(ws->name, "wlan_wow_wl", wslen)) ||
+				!strncmp(ws->name, "wlan_wow_wl", wslen)) ||
 			(!enable_wlan_ws &&
 				!strncmp(ws->name, "wlan", wslen)) ||
+			(!enable_netlink_ws &&
+				!strncmp(ws->name, "NETLINK", wslen)) ||
+			(!enable_netmgr_wl_ws &&
+				!strncmp(ws->name, "netmgr_wl", wslen)) ||
 			(!enable_timerfd_ws &&
 				!strncmp(ws->name, "[timerfd]", wslen))) {
 			if (ws->active) {
