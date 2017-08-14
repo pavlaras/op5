@@ -179,13 +179,13 @@ struct test_header {
 #define KEY_BUTTON_RIGHT    KEY_APPSELECT
 
 /*********************for Debug LOG switch*******************/
-#define TPD_ERR(a, arg...)  pr_err(TPD_DEVICE ": " a, ##arg)
-#define TPDTM_DMESG(a, arg...)  printk(TPD_DEVICE ": " a, ##arg)
+#define TPD_ERR(a, arg...)  pr_debug(TPD_DEVICE ": " a, ##arg)
+#define TPDTM_DMESG(a, arg...)  pr_debug(TPD_DEVICE ": " a, ##arg)
 
 #define TPD_DEBUG(a,arg...)\
 	do{\
 		if(tp_debug)\
-		pr_err(TPD_DEVICE ": " a,##arg);\
+		pr_debug(TPD_DEVICE ": " a,##arg);\
 	}while(0)
 
 /*---------------------------------------------Global Variable----------------------------------------------*/
@@ -1655,6 +1655,9 @@ static void int_key_report_s3508(struct synaptics_ts_data *ts)
 	int ret = 0;
 	int F1A_0D_DATA00 = 0x00;
 	int button_key;
+
+	if (ts->is_suspended == 1)
+		return;
 
 	int keycode_left;
 	int keycode_right;
